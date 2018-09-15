@@ -48,48 +48,6 @@ def ConvertVoltage(data,places):
 	voltage = round (voltage,places)
 	return voltage
 
-# threaded callbacks
-#Reset Timer
-def callback1(channel1):
-	global timer
-	timer = 0
-	print("\n"*100)				
-
-#Change frequency
-def callback2(channel2):
-	global delay
-	if (delay<2):
-		delay*=2
-	else:
-		delay=0.5
-# Stop/Start monitoring of sensors
-def callback3(channel3):
-	global sense
-	#clear redording array
-	global record
-	record = []
-	if (sense== True):
-		sense = False
-	elif(sense == False):
-		sense= True
-
-# Display readings
-def callback4(channel4):
-	global sense
-	global record
-	if (sense==True):
-		if (len(record)>4):
-			print('_'*47)
-			print('Time        Timer          Pot    Temp   Light')
-			for i in range(0,5):
-				print(record[i])
-				print('_'*47)
-		else:
-			print("Please wait for 5 readings to be recorded")
-
-	else:
-		print("Sensor  not on")
-
 # Under a falling-edge detection, regardless od current execution
 # callback function will be called
 GPIO.add_event_detect(switch_1, GPIO.FALLING, callback = callback1, bouncetime = 200)
